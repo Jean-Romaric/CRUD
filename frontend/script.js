@@ -21,7 +21,7 @@ async function addProduit() {
         body: JSON.stringify(data) //donnée envoyée au serveur dans le body de la requette
     })
     console.log(JSON.stringify(data));
-  //  console.log(data);
+    //  console.log(data);
 
     loadProduits()
 
@@ -42,36 +42,34 @@ async function loadProduits() {
     produits.forEach(p => {
 
         ul.innerHTML += `
-<li>
-${p.nom} - ${p.couleur}
-<button onclick="deleteProduit(${p.id})">Supprimer</button>
-<button onclick="getOneProduit(${p.id})">Voir produit</button>
-</li>
-`
+        <li>
+        ${p.nom} - ${p.couleur}
+        <button onclick="deleteProduit(${p.id})">Supprimer</button>
+        <button onclick="getOneProduit(${p.id})">Voir produit</button>
+        </li>
+        `
 
-})
+    })
 
 }
 
 //Afficher un Produit//
 async function getOneProduit(id) {
-     const res = await fetch(API)
+    const res = await fetch(API)
     const produits = await res.json()
-    //console.log(produits);
-    
-    produits.filter(ChekProduit);
 
-    function ChekProduit(produit){
-        console.log(id);
-        console.log('  ');
-        console.log(produit.id);
-    }
-}    
-
-
-
-
-
+     for(let i=0; i<produits.length; i++){
+         if(produits[i].id == id){ //produits[i] correspond à un produit de la liste, on vérifie si son id correspond à celui passé en paramètre
+         let maFenetre =   window.open('http://127.0.0.1:5500/frontend/test.html', '_blank');
+            maFenetre.onload = function() {
+            // L'élément est maintenant disponible
+            let monTitre = maFenetre.document.querySelector("h1");
+            monTitre.textContent = `Produit: ${produits[i].nom} - Couleur: ${produits[i].couleur}`;
+            monTitre.style.color = "green";
+          };
+         }
+     }
+}
 
 
 //Supprimer un Produit//
@@ -85,8 +83,16 @@ async function deleteProduit(id) {
 
 }
 
+//Supprimer tout Produits//
+async function deleteAllProduits() {
+
+    await fetch(API, {
+        method: "DELETE"
+    })
+    loadProduits()
+
+}
 
 
 
 
-loadProduits()

@@ -32,10 +32,6 @@ app.post("/produits", (req,res)=>{
     })
 })
 
-
-
-
-
 /* READ */
 app.get("/produits",(req,res)=>{
     db.query("SELECT * FROM produits",(err,result)=>{
@@ -44,13 +40,6 @@ app.get("/produits",(req,res)=>{
         res.json(result)
     })
 })
-
-
-
-
-
-
-
 
 /* UPDATE */
 app.put("/produits/:id",(req,res)=>{
@@ -65,7 +54,6 @@ app.put("/produits/:id",(req,res)=>{
     })
 })
 
-
 /* get one produit */
 app.get("/produits/:id",(req,res)=>{
     const id = req.params.id
@@ -75,11 +63,6 @@ app.get("/produits/:id",(req,res)=>{
         res.json(result)
     })
 })
-
-
-
-
-
 
 /* DELETE */
 app.delete("/produits/:id",(req,res)=>{
@@ -96,10 +79,12 @@ app.delete("/produits/:id",(req,res)=>{
     })
 })
 
-
-
-
-
+/* DELETE ALL*/
+app.delete("/produits",(req,res)=>{
+    db.query("DELETE FROM produits",(err,result)=>{
+        if(err) throw err
+        res.send("Tous les produits ont été supprimés")
+    })});
 
 
 
