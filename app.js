@@ -5,6 +5,7 @@ const db = require("./config/db")
 const app = express()
 
 app.use(cors())
+app.use(express.urlencoded({ extended: true })) //permet d'envoyer des données dans le body de la requette en utilisant le format x-www-form-urlencoded, qui est un format de données couramment utilisé pour envoyer des données de formulaire. L'option extended: true permet de parser les données imbriquées, ce qui signifie que vous pouvez envoyer des objets et des tableaux dans le body de la requette.
 app.use(express.json())
 app.use(express.static("public"))
 
@@ -16,8 +17,8 @@ app.use(express.static("public"))
 /* CREATE */
 app.post("/produits", (req,res)=>{
 
-    const nom = req.body.couleur
-    const couleur = req.body.nom
+    const nom = req.body.nom;
+    const couleur = req.body.couleur;
     //const {nom, couleur} = req.body
     //console.log(nom, couleur);
     //console.log(req);
@@ -28,6 +29,7 @@ app.post("/produits", (req,res)=>{
     db.query(sql,[nom,couleur],(err,result)=>{
         if(err) throw err
       //   console.log(result);
+      //res.redirect("http://127.0.0.1:5500/frontend/test.html")
         res.status(200).json({message:"Produit ajouté", id:result.insertId}) //result.insertId contient l'id du produit ajouté
     })
 })

@@ -6,6 +6,18 @@
     <title>Un produit</title>
 </head>
 <body>
-    <h1></h1>
+<form action="http://127.0.0.1:3000/produits" method="POST">
+
+<input name="nom" placeholder="Nom produit"><br><br>    
+<input name="couleur" placeholder="Couleur">
+
+<button type="submit">Envoyer</button>
+<script>
+    if(window.location.search.includes("success")){
+    alert("Produit ajouté")
+}
+</script>
+
+</form>
 </body>
 </html>
